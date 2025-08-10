@@ -1,0 +1,280 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap");
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+}
+.khung {
+  line-height: 1.5;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.container_tai {
+  width: 100%;
+  display: flex;
+  margin: 0 auto;
+  margin-top: 60px;
+  height: 500px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+}
+.product-imgs {
+  position: relative;
+  width: 40%;
+  display: flex;
+  
+}
+/* slide */
+
+.td-img-display {
+  display: flex;
+  width: 100%;
+  transition: all 0.5s ease;
+  height: 420px;
+
+}
+.td-img-display img {
+  margin-left: 25px;
+  padding: 1rem;
+  width: 420px;
+}
+
+/* .td-img-display img:hover {
+  transform: scale(1.2);
+} */
+
+
+/* info Right */
+.product-content {
+  width: 60%;
+  padding-top: 0;
+  /*  */
+  padding: 0 1.5rem;
+}
+
+.product-title {
+  font-size: 1.6rem;
+  text-transform: capitalize;
+  font-weight: 700;
+  position: relative;
+  color: #12263a;
+  margin: 1rem 0;
+}
+
+.product-link {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 0.9rem;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  background: #256eff;
+  color: #fff;
+  padding: 0 0.3rem;
+  transition: all 0.5s ease;
+}
+.product-link:hover {
+  opacity: 0.9;
+}
+.product-rating {
+  color: #ffc107;
+  margin: 20px 0px 30px;
+}
+.product-rating span {
+  font-weight: 600;
+  color: #252525;
+}
+
+.product-detail {
+  margin: 30px 0px 30px 0px;
+}
+
+
+/* /info Right */
+
+/* info supplier and author */
+
+/* .product-view-sa {
+  margin: 35px 0px 30px;
+}
+.product-view-sa-supplier {
+  display: inline-block;
+  width: 45%;
+  padding-right: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.product-view-sa-supplier span:first-child {
+  padding-right: 5px;
+}
+.product-view-sa-supplier a {
+  color: #2489f4;
+  font-weight: 600;
+  text-decoration: none;
+}
+.product-view-sa-author {
+  display: inline-block;
+  width: 50%;
+  padding-left: 15px;
+  border-left: 1px solid #c1c1c1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-view-sa-author span:first-child {
+  padding-right: 5px;
+}
+.product-view-sa-author span:nth-of-type(2) {
+  font-weight: 600;
+}
+.product-view-sa-supplier span:nth-of-type(2) {
+  font-weight: 600;
+} */
+/*  /info supplier and author */
+/* price */
+.price {
+  font-size: 32px;
+  line-height: 32px;
+  color: #c92127;
+  font-family: "Roboto", sans-serif !important;
+  font-weight: 700;
+}
+
+.price-old {
+  color: #0d0e0f;
+  text-decoration: line-through;
+  font-size: 14px;
+  font-weight: 600;
+  padding-left: 15px;
+}
+/* /price */
+
+/* input number */
+.input-number {
+  padding: 3px 30px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+.input-number:focus {
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+}
+/* /input number */
+/* button them vào gio hàng va pay */
+.btn-cart {
+  position: absolute;
+  bottom: 20px;
+  left: 15px;
+  display: flex;
+}
+.btn-cart-to-cart:first-of-type {
+  margin-left: 0;
+  color: #c92127;
+  background: #fff;
+  border: 2px solid #c92127;
+}
+
+.btn-cart-to-cart {
+  cursor: pointer;
+  user-select: none;
+  height: 44px;
+  margin-left: 10px;
+  width: 220px;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 8px;
+  color: #fff;
+  background: #c92127;
+  border: none;
+  text-align: center;
+  padding-top: 10px;
+}
+.bi .bi-cart3 {
+  height: 24px;
+  width: 22px;
+}
+/* /button them vào gio hàng va pay */
+.quantity > .qty {
+  margin-right: 30px;
+  font-size: 1.2em;
+  font-weight: 650;
+  padding: 0 8px 0 0;
+  margin-bottom: 0;
+  text-align: left;
+
+  padding: 4px;
+  color: #555555;
+}
+
+/*  */
+
+
+.text-span{
+  font-weight: 600;
+}
+
+/*  */
+/* Thanh cuộn */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Màu sắc của thanh cuộn */
+::-webkit-scrollbar-thumb {
+  background-color: #999999;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+  background-image: linear-gradient(-45deg, #6a5af9, #d66efd); border-radius: 50px;
+}
+
+/* Màu sắc khi hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555555;
+}
+
+/* Màu sắc khi active */
+::-webkit-scrollbar-thumb:active {
+  background-color: #333333;
+}
+
+/* Màu sắc của thanh cuộn track */
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+
+/* 
+ */
+
+ .social-links {
+  display: flex;
+  align-items: center;
+}
+.social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: #000;
+  border: 1px solid #000;
+  margin: 0 0.2rem;
+  border-radius: 50%;
+  text-decoration: none;
+  font-size: 0.8rem;
+  transition: all 0.5s ease;
+}
+.social-links a:hover {
+  background: #000;
+  border-color: transparent;
+  color: #fff;
+}

@@ -1,0 +1,81 @@
+:root {
+    --shadow-form :  rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    --mau-border-input-focus:     #CA2F2F;
+    --mau-border-btn-focus:     #ff4848;
+}
+.form-wrapper .card .card-header {
+    background-color: #fff;
+    border-bottom:none ;
+}
+.form-wrapper .nav-link {
+    color: #888;
+}
+
+.form-wrapper .card {
+    box-shadow: var(--shadow-form);
+    border: none;
+}
+.form-center {
+    margin-left: 15em;
+}
+.form-section {
+    font-size: 14px;
+}
+
+.form-section textarea ,
+.form-section input[type="text"],
+.form-section  input[type= "email"],
+.form-section  input[type= "text"],
+.form-section  input[type= "password"],
+.form-section  input[type= "number"],
+.form-section  input[type= "date"],
+.form-section  .input-datalist,
+.form-section .form-select
+{
+    border-color: #e5e5e5;
+    border-radius: 0;
+    border-style: solid;
+    border-width: 1px;
+    background-color: #fff;
+    color: #888;
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    outline: medium none;
+    transition: all 0.2s ease 0s;
+    padding: 8px 10px;
+    min-width: 40px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.form-section .btn
+{
+    width: min-content;
+    background: var(--mau-border-input-focus) none repeat scroll 0 0;
+    border-radius: 0;
+    color: #fff;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.form-section .btn:hover
+  {
+    background: var(--mau-border-btn-focus) none repeat scroll 0 0;
+    color: #fff;
+    text-decoration: none;
+}
+
+.form-section  .form-control:focus,
+.form-section .form-select:focus
+{
+    box-shadow: none !important;
+    border-color: var( --mau-border-input-focus)  !important;
+}
+.message-errors {
+    margin-top: 5px;
+    font-size: .875em;
+    color:  #FF0000;
+}

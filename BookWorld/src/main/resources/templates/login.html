@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+
+    <link rel="stylesheet" th:href="@{/assets/css/form.css}">
+    <th:block th:include="fragment/css-links.html"></th:block>
+</head>
+
+
+<body>
+    <!-- Header -->
+    <div th:replace="fragment/header.html :: #header "></div>
+    <!-- /Header -->
+    <div id="successMessage" class="success-message"></div>
+    <div id="errorMessage" class="error-message"></div>
+
+  
+
+    <div class="container py-5  d-flex justify-content-center align-items-center" style="height: 65vh;">
+        <div class="form-wrapper w-100 d-flex justify-content-center align-items-center">
+            <div class="card" style="width: 500px;">
+                <div class="card-header">
+                    <div class="text-center">
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+                                    aria-selected="true">Đăng nhập</button>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                </nav>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 ">
+                            <!-- Login -->
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                                    aria-labelledby="nav-home-tab">
+                                    <form class="form-section" th:action="@{/account/login}" th:object="${user}"
+                                        method="post">
+                                        <span th:text="${failed}"></span>
+                                        <div class="form-group mb-3">
+                                            <input type="text" name="username" id="username"
+                                                tabindex="1" class="form-control" placeholder="Tên đăng nhập"
+                                                th:field="*{username}" th:value="${username}" >
+                                            <!-- lỗi -->
+                                             <div class="alert alert-warning " th:if="${#fields.hasErrors('username')}"
+                                                th:errors="*{username}">
+                                            </div>
+                                        </div>
+
+                                        <!--  -->
+                                        <!--  -->
+                                        <div class="form-group mb-3">
+                                            <input type="password" name="password" id="password" tabindex="2"
+                                                class="form-control" placeholder="Mật khẩu" th:field="*{password}">
+                                        </div>
+
+                                        <!-- lỗi -->
+                                        <div class="alert alert-warning " th:if="${#fields.hasErrors('password')}"
+                                            th:errors="*{password}">
+                                        </div>
+                                        <!--  -->
+                                        <div class="form-group mb-3 d-flex justify-content-center">
+                                            <div class="form-check">
+                                                <input class="form-check-input " name="remember" type="checkbox"
+                                                    id="remember">
+                                                <label class="form-check-label check-remember" for="remember">
+                                                    Nhớ mật khẩu ?
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-3">
+                                            <div class="row">
+                                                <div class="col-sm-12 d-flex justify-content-center">
+                                                    <button type="submit" name="login-submit" id="login-submit" tabindex="4"
+                                                    class="form-control btn btn-login" style="width: 150px;">Đăng nhập</button>
+                                                
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </form>
+                                    <p th:text="${error}" style="color: red; text-align: center;"></p>
+                                    <!-- /Login -->
+                                    <div class="form-group mb-3">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="text-center">
+                                                    <a th:href="@{/account/forgot-password}" tabindex="5"
+                                                        class="forgot-password text-decoration-none text-black">Quên
+                                                        mật khẩu?</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="text-center">
+                                                    <a th:href="@{/account/sign-up}" tabindex="5"
+                                                        class="forgot-password text-decoration-none text-black">Đăng
+                                                        ký</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="nav-contact" role="tabpanel"
+                                    aria-labelledby="nav-contact-tab">...</div>
+                                <div class=" d-flex justify-content-center">
+                                    <a th:href="@{/index}" class="text-black btn-back-home"> <i
+                                            class="fa-solid fa-arrow-left"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${successMessage}" id="successDialog" class="dialog-overlay">
+        <div class="dialog-content">
+            <p th:text="${successMessage}"></p>
+        </div>
+    </div>
+    <div th:if="${failed}" id="successDialog" class="dialog-overlay">
+        <div class="dialog-content-failed">
+            <p th:text="${failed}"></p>
+        </div>
+    </div>
+
+    <!--footer  -->
+    <div th:replace="fragment/footer.html :: #footer"></div>
+    <!--/footer  -->
+    <th:block th:include="fragment/script-links.html"></th:block>
+</body>
+<script>
+    // Kiểm tra xem có thông báo thành công hay không
+    var message = document.getElementById("successMessage");
+    if (message.innerText !== "") {
+        // Hiển thị thông báo thành công trong một khoảng thời gian nhất định
+        message.style.display = "block";
+        setTimeout(function () {
+            message.style.display = "none";
+        }, 3000); // 3 giây
+    }
+</script>
+<div id="errorMessage" class="error-message"></div>
+<script>
+    // Kiểm tra xem có thông báo lỗi hay không
+    var error = document.getElementById("errorMessage");
+    if (error.innerText !== "") {
+        // Hiển thị thông báo lỗi
+        error.style.display = "block";
+    }
+</script>
+
+<script>
+    // Kiểm tra xem có giá trị tên người dùng đã được lưu trong cookie hay không
+    var savedUsername = getCookie("username");
+    if (savedUsername !== "") {
+        // Đặt giá trị tên người dùng lưu trong cookie vào trường nhập liệu
+        document.getElementById("username").value = savedUsername;
+    }
+
+    // Hàm để lấy giá trị của một cookie
+    function getCookie(name) {
+        var cookieName = name + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var cookieArray = decodedCookie.split(";");
+
+        for (var i = 0; i < cookieArray.length; i++) {
+            var cookie = cookieArray[i];
+            while (cookie.charAt(0) === " ") {
+                cookie = cookie.substring(1);
+            }
+            if (cookie.indexOf(cookieName) === 0) {
+                return cookie.substring(cookieName.length, cookie.length);
+            }
+        }
+        return "";
+    }
+</script>
+
+</html>

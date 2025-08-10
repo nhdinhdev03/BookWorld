@@ -1,0 +1,97 @@
+<div id="sidebar-menu">
+  <ul class="sidebar-menu__submenu">
+    <li class="submenu-open">
+      <h6 class="submenu-hdr">Sản phẩm</h6>
+      <div class="d-flex align-items-start submenu-group">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button
+                  th:class="|accordion-button  ${#strings.substringAfter(pageName, ' ') == 'products' ? '' : 'collapsed' }|"
+                  type="button" data-bs-toggle="collapse" data-bs-target="#collapseQuanLySach" aria-expanded="false"
+                  aria-controls="collapseQuanLySach">
+                  <i class="bi bi-book-fill me-2"></i> Quản lí sách
+                </button>
+              </h2>
+              <div id="collapseQuanLySach"
+                th:class="|accordion-collapse collapse ${#strings.substringAfter(pageName, ' ') == 'products' ?'show' : '' }| "
+                aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <div class="d-flex align-items-start submenu-group">
+                    <div class="nav flex-column nav-pills " id="v-pills-tab" role="tablist" aria-orientation="vertical">
+
+                      <a th:class="|nav-link submenu-nav-link ${#strings.substringBefore(pageName, ' ') == 'authors' ?'active' : '' }|"
+                        href="/admin/authors" type="button" role="tab"><i class="bi bi-journal-text"></i> Tác giả</a>
+                      <a th:class="|nav-link submenu-nav-link ${#strings.substringBefore(pageName, ' ') == 'publishers' ?'active' : '' }|"
+                        href="/admin/publishers" type="button" role="tab"><i class="bi bi-box"></i> Nhà xuất bản</a>
+                      <a th:class="|nav-link submenu-nav-link ${#strings.substringBefore(pageName, ' ') == 'categories' ?'active' : '' }|"
+                        href="/admin/categories" type="button" role="tab"> <i class="bi bi-tags"></i> Danh mục</a>
+                      <a th:class="|nav-link submenu-nav-link ${#strings.substringBefore(pageName, ' ') == 'products' ?'active' : '' }|"
+                        href="/admin/products" type="button" role="tab"><i class="bi bi-book"></i> Sách</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingTwo">
+                <button
+                  th:class="|accordion-button  ${#strings.substringAfter(pageName, ' ') == 'orders' ? '' : 'collapsed' }|"
+                  type="button" data-bs-toggle="collapse" data-bs-target="#collapseQuanLyDonHang" aria-expanded="false"
+                  aria-controls="collapseQuanLyDonHang">
+                  <i class="bi bi-bag-dash-fill me-2"></i> Quản lý đơn hàng
+                </button>
+              </h2>
+              <div id="collapseQuanLyDonHang"
+                th:class="|accordion-collapse collapse ${#strings.substringAfter(pageName, ' ') == 'orders' ?'show' : '' }| "
+                aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <div class="d-flex align-items-start submenu-group">
+                    <div class="nav flex-column nav-pills " id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                      <a th:class="|nav-link submenu-nav-link ${#strings.substringBefore(pageName, ' ') == 'orders-pending' ?'active' : '' }|"
+                        href="/admin/orders-pending" type="button" role="tab"><i class="bi bi-dropbox"></i> Chờ xử
+                        lí</a>
+                      <a th:class="|nav-link submenu-nav-link ${#strings.substringBefore(pageName, ' ') == 'orders-shipped' ?'active' : '' }|"
+                        href="/admin/orders-shipped" type="button" role="tab"><i class="bi bi-stack"></i> Đã giao</a>
+                      <a th:class="|nav-link submenu-nav-link ${#strings.substringBefore(pageName, ' ') == 'orders-canceled' ?'active' : '' }|"
+                        href="/admin/orders-canceled" type="button" role="tab"> <i class="bi bi-view-stacked"></i>Đã
+                        hủy</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingThree">
+                <button
+                  th:class="|accordion-button  ${#strings.substringAfter(pageName, ' ') == 'statistical' ? '' : 'collapsed' }|"
+                  type="button" data-bs-toggle="collapse" data-bs-target="#collapseThongKe" aria-expanded="false"
+                  aria-controls="collapseThongKe">
+                  <i class="bi bi-bar-chart-fill me-2"></i> Thống kê
+                </button>
+              </h2>
+              <div id="collapseThongKe"
+                th:class="|accordion-collapse collapse ${#strings.substringAfter(pageName, ' ') == 'statistical' ?'show' : '' }| "
+                aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <div class="nav flex-column nav-pills " id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a th:class="|nav-link submenu-nav-link ${#strings.substringBefore(pageName, ' ') == 'favorite-books' ?'active' : '' }|"
+                      href="/admin/favorite-books" type="button" role="tab"><i class="bi bi-slack"></i> Sách yêu
+                      thích</a>
+                    <a th:class="|nav-link submenu-nav-link ${#strings.substringBefore(pageName, ' ') == 'sold-books' ?'active' : '' }|"
+                      href="/admin/sold-books" type="button" role="tab"><i class="bi bi-unity"></i>Sách đã bán</a>
+                    <a th:class="|nav-link submenu-nav-link ${#strings.substringBefore(pageName, ' ') == 'revenue' ?'active' : '' }|"
+                      href="/admin/revenue" type="button" role="tab"><i class="bi bi-cash-coin"></i>Doanh thu</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a th:class="|nav-link submenu-nav-link ${#strings.substringBefore(pageName, ' ') == 'users' ?'active' : '' }|"
+            href="/admin/users" type="button" role="tab"><i class="bi bi-people-fill"></i> Quản lý người dùng</a>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

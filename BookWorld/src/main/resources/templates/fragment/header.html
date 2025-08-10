@@ -1,0 +1,113 @@
+<header id="header" class="header" th:if="${session.user == null || session.user.admin==false }">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 col-md-2">
+                    <div class="header__top__left">
+                        <ul>
+
+                            <li><i class="fa fa-envelope"></i> abcdez@gmail.com</li>
+
+                            <li>
+                                <div class="cinema_search">
+                                    <!-- <form action="#" method="post">
+                                        <input type="text" name="Search" placeholder="Tìm Kiếm" required="" />
+                                        <input type="submit" value="Tìm Kiếm" />
+                                    </form> -->
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-5 col-md-4">
+                    <div class="header__top__right">
+                        <div class="header__top__right__social">
+                            <div id="mobile-menu-wrap"></div>
+                            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        </div>
+                        <div class="header__top__right__language">
+                            <img th:src="@{/assets/img/VN.jpg}" width="20px" alt="">
+                            <link th:href="@{/assets/css/style.css}" rel="stylesheet" type="text/css" />
+                            <div>Việt Nam</div>
+
+                            <ul>
+                                <li><a href="#">Việt Nam</a></li>
+                                <li><a href="#">English</a></li>
+                            </ul>
+                        </div>
+                        <div th:if="${session.user==null}" class="header__top__right__language">
+                            <link th:href="@{/assets/css/style.css}" rel="stylesheet" type="text/css" />
+                            <i class="fa fa-user"></i>
+
+                            <a th:href="@{/account/login}">
+                                <div>Đăng nhập</div>
+                            </a>
+
+
+
+                            </ul>
+                        </div>
+                        <div th:if="${session.user!=null}" class="header__top__right__language">
+                            <link th:href="@{/assets/css/style.css}" rel="stylesheet" type="text/css" />
+                            <i class="fa fa-user"></i>
+                            <div th:text="${session.user.fullName}"></div>
+                            <ul>
+                                <li><a th:href="@{/account/profile}">Hồ Sơ</a></li>
+                                <li><a th:href="@{/user/orders}">Đơn hàng</a></li>
+                                <li><a th:href="@{/account/logout}">Đăng xuất</a></li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:unless="${checkAdmin}" class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="header__logo">
+                    <a th:href="@{/index}"><img th:src="@{/assets/img/logo.png}" width="160px" alt=""></a>
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <nav class="header__menu">
+                    <ul>
+                        <li><a th:href="@{/index}">Trang Chủ</li>
+                        <li><a th:href="@{/gioithieu}">Giới Thiệu</a></li>
+                        <li><a th:href="@{/lienhe}">Liên Hệ</a></li>
+                        <li><a th:href="@{/yeuthich}" th:if="${session.user != null}">Yêu Thích</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3">
+                <div class="header__cart">
+                    <ul>
+                        <!-- <li><a th:href="@{/yeuthich}"><i class="fa fa-heart"></i> <span>1</span></a></li> -->
+                        <li><a th:href="@{/giohang}"><i class="fa fa-shopping-bag"></i> <span
+                                    th:text="${session.cartSize !=null ?session.cartSize:'0'}">3</span></a></li>
+
+                    </ul>
+                    <div class="header__cart__price">items: <span
+                            th:text="${session.cartTotal != null ?session.cartTotal: '0.0'}"></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="humberger__open">
+            <i class="fa fa-bars"></i>
+        </div>
+
+    </div>
+
+</header>
+
+<!-- Header Section End -->

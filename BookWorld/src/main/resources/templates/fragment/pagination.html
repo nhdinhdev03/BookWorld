@@ -1,0 +1,23 @@
+<nav aria-label="Page navigation example" class="pagination-section">
+  <ul class="pagination">
+    <li th:class="${'page-item ' + (page.isFirst ?'disabled': '' )}">
+      <a class="page-link" th:href="@{/admin/page(p=0)}">First</a>
+    </li>
+    <li th:class="${'page-item ' + (not page.hasPrevious ? 'disabled' :'')}">
+      <a class="page-link" th:href="@{/admin/page(p=${page.number-1})}">Prev</a>
+    </li>
+    <!-- <th:block th:each="i : ${#numbers.sequence(0, page.totalPages - 1 )}">
+          <li class="page-item">
+              <a th:style="${'background-color:' + (i== page.number?'lightgrey':'white')}"   
+            class="page-link" th:href="@{/admin/page(p=${i})}" th:text="${i + 1 }"> </a>
+          </li>
+      </th:block> -->
+    <li th:class="${'page-item ' + (not page.hasNext ? 'disabled' :'')}">
+      <a class="page-link" th:href="@{/admin/page(p=${page.number+1})}">Next</a>
+    </li>
+    <li th:class="${'page-item ' + ( page.isLast ? 'disabled' :'')}">
+      <a class="page-link" th:href="@{/admin/page(p=${page.totalPages-1})}">Last</a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+  </ul>
+</nav>

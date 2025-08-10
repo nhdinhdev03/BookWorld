@@ -1,0 +1,96 @@
+<div class="card page-wrapper">
+  <div class="card-body">
+    <div class="page-title">Doanh thu</div>
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-authors-tab" data-bs-toggle="tab" data-bs-target="#nav-authors" type="button" role="tab" aria-controls="nav-authors" aria-selected="true">Danh sách</button>
+      </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <!-- Danh sách -->
+      <div class="tab-pane fade  show active" id="nav-authors" role="tabpanel" aria-labelledby="nav-authors-tab" tabindex="0">
+        <div class="table-top row px-0 mx-0">
+          <div class="table-top__search-set col-6 px-0 d-flex justify-content-end align-items-center">
+            <form action="/admin/revenue" method="post" class="form-section mt-3">
+              <div class="row">
+                <div class="form-group mb-3 col-4  ">
+                  <input type="date" name="startDate" class="form-control ">
+                </div>
+                <div class="form-group mb-3 col-4">
+                  <input type="date" name="endDate" class="form-control ">
+                </div>
+                <div class="form-group mb-3 col-4">
+                  <input  type="submit" tabindex="4" class="form-control btn ms-2" style="padding: 6px 15px;" value="Tìm kiếm">
+                </div>
+              </div>
+              <div class="message-errors" style="margin-left: 20%;"  th:text="${message}"></div>
+            </form>
+          </div>  
+          <div class="table-top__wordset col-6  px-0">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary ">
+              <div class="container-fluid px-0">
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                  <ul class="navbar-nav ms-auto me-0 mb-2 mb-lg-0">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#"><i class="bi bi-file-earmark-pdf-fill"></i></a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#"><i class="bi bi-filetype-exe"></i></a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#"><i class="bi bi-printer-fill"></i></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <div class="table-bottom">
+            <div class="table-responsive d-flex justify-content-center ">
+              <table class="table table-hover w-75">
+                <thead>
+                  <tr class="tb-header">
+                    <th scope="col" >STT</th>
+                    <th scope="col" >Số lượng đơn hàng</th>
+                    <th scope="col">Số lượng sản phẩm</th>
+                    <th scope="col">Ngày bán</th>
+                    <th scope="col">Tổng tiền</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="" th:each="item, iStat : ${page.content}">
+                    <td th:text="${iStat.index}"></td>
+                    <td th:text="${item.numOrders}">2</td>
+                    <td th:text="${item.numBooksSold}">2</td>
+                    <td th:text="${item.createdDate}">2</td>
+                    <td th:text="${item.totalPrice}">2</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div> 
+        </div>
+        <nav aria-label="Page navigation example" class="pagination-section mt-2" >
+          <div class="text">
+            <i th:text="${page.number +1}"></i> <strong th:text="'of  '+${page.totalPages}"></strong>
+          </div>
+          <ul class="pagination" >
+            <li th:class="${'page-item ' + (page.isFirst ?'disabled': '' )}" >
+              <a class="page-link" th:href="@{/admin/revenue(p=0)}"><i class="bi bi-chevron-bar-left"></i></a>
+            </li>
+            <li th:class="${'page-item ' + (not page.hasPrevious ? 'disabled' :'')}">
+              <a class="page-link" th:href="@{/admin/revenue(p=${page.number-1})}" ><i class="bi bi-chevron-left"></i></a>
+            </li>
+            <li th:class="${'page-item ' + (not page.hasNext ? 'disabled' :'')}">
+              <a class="page-link"  th:href="@{/admin/revenue(p=${page.number+1})}"><i class="bi bi-chevron-right"></i></a>
+            </li>
+            <li th:class="${'page-item ' + ( page.isLast ? 'disabled' :'')}">
+              <a class="page-link" th:href="@{/admin/revenue(p=${page.totalPages-1})}"><i class="bi bi-chevron-bar-right"></i></a>
+            </li>
+          </ul>
+      </nav>
+      </div>
+     <!-- /Danh sách -->
+    </div>
+  </div>
+</div>

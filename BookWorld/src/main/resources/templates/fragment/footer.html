@@ -1,0 +1,74 @@
+<!-- Footer Section -->
+<footer id="footer" class="footer spad" th:if="${session.user == null || session.user.admin==false }" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer__about">
+                    <div class="footer__about__logo">
+                        <a th:href="@{/bookworld/index}"><img th:src="@{/assets/css/img.index/logo.jpg}" width="160px"
+                                alt=""></a>
+                        <img src="..//" alt="">
+                    </div>
+                    <ul>
+                        <li>Cần Thơ</li>
+                        <li>Phone: +84 123456789</li>
+                        <li>Email: abcdez@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+                <div class="footer__widget">
+                    <h6>Liên kết hữu ích</h6>
+                    <ul>
+                        <li><a href="#">Về chúng tôi</a></li>
+                        <li><a href="#">Về Cửa Hàng Của</a></li>
+                        <li><a href="#">Mua Sách</a></li>
+                        <li><a href="#">Giao Hàng</a></li>
+                        <li><a href="#">Điều khoản sử dụng</a></li>
+                        <li><a href="#">Chính sách bảo mật </a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="#">Chính sách đổi - trả - hoàn tiền</a></li>
+                        <li><a href="#">Hệ thống trung tâm - nhà sách</a></li>
+                        <li><a href="#">Phương thức thanh toán và xuất HĐ</a></li>
+                        <li><a href="#">Lịch sử mua hàng</a></li>
+                        <li><a href="#">Chi tiết tài khoản</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+                <div class="footer__widget">
+                    <h6>Liên Hệ Chúng Tôi</h6>
+                    <p>Nhận thông tin cập nhật qua email về cửa hàng mới nhất của chúng tôi và các ưu đãi đặc biệt.</p>
+                    <form action="#">
+                        <input type="text" placeholder="Nhập Gmail">
+                        <button type="submit" class="site-btn">Gửi</button>
+                    </form>
+
+                    <div class="footer__widget__social">
+                        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer__copyright">
+                        <div class="footer__copyright__payment"><img th:src="@{/assets/css/img.index/payment-item.jpg}"
+                                alt=""></div>
+                        <div class="footer__copyright__payment"><img th:src="@{/assets/img/payment-item.png}" alt=""><a
+                                href=""></a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</footer>
+
+<!-- Footer Section End -->

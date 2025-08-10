@@ -1,0 +1,239 @@
+<div class="card page-wrapper">
+  <div class="card-body">
+    <div class="page-title">Quản lí người dùng</div>
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button th:class="'nav-link ' +  (${form==true ? 'active' : ''})  " id="nav-form-tab" data-bs-toggle="tab"
+          data-bs-target="#nav-form" type="button" role="tab" aria-controls="nav-form" aria-selected="false">Cập
+          nhật</button>
+        <button th:class="'nav-link '+ (${form==false ? 'active' : ''}) " id="nav-authors-tab" data-bs-toggle="tab"
+          data-bs-target="#nav-authors" type="button" role="tab" aria-controls="nav-authors" aria-selected="true">Danh
+          sách</button>
+
+      </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <!-- Cập nhật -->
+      <div th:class="'tab-pane fade ' + (${form==true ? 'show active' : ''}) " id="nav-form" role="tabpanel"
+        aria-labelledby="nav-form-tab" tabindex="0">
+        <div class="form-wrapper form-center">
+
+          <form class="form-section" th:action="@{/admin/Users}" method="post" th:object="${user}"
+            enctype="multipart/form-data">
+            <div class="row">
+
+              <div class="form-group mb-3 col-6">
+                <input th:readonly="${isEdit==true}" type="text" name="id" id="youtube-id" tabindex="1"
+                  class="form-control" placeholder="Mã người dùng" th:field="*{username}">
+
+              </div>
+              <div class="form-group mb-3 col-6">
+                <input type="text" name="title" id="youtube-title" tabindex="2" class="form-control"
+                  placeholder="Mật khẩu" th:field="*{password}">
+                <!-- lỗi -->
+                <div class="alert alert-warning " th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                </div>
+
+              </div>
+
+
+              <div class="form-group mb-3 col-6">
+                <input type="text" name="views" id="view-count" tabindex="1" class="form-control"
+                  placeholder="Họ và tên" th:field="*{fullName}">
+                <!-- lỗi -->
+                <div class="alert alert-warning " th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">
+                </div>
+              </div>
+              <div class="form-group mb-3 col-6">
+                <input type="text" name="views" id="view-count" tabindex="1" class="form-control"
+                  placeholder="Số điện thoại" th:field="*{phone}">
+                <!-- lỗi -->
+                <div class="alert alert-warning " th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">
+                </div>
+              </div>
+              <div class="form-group mb-3 col-6">
+                <input type="text" name="views" id="view-count" tabindex="1" class="form-control" placeholder="Email"
+                  th:field="*{email}">
+                <div class="alert alert-warning " th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                </div>
+              </div>
+              <div class="form-group mb-3 col-6">
+                <input type="text" name="views" id="view-count" tabindex="1" class="form-control" placeholder="Địa chỉ"
+                  th:field="*{address}">
+                <div class="alert alert-warning " th:if="${#fields.hasErrors('address')}" th:errors="*{address}">
+                </div>
+              </div>
+
+            </div>
+            <div class="mb-3">
+              <div class="input-group mb-3">
+                <input type="file" class="form-control" id="inputGroupFile02" name="fileImage">
+
+                <label class="input-group-text" for="inputGroupFile02">Hình ảnh</label>
+              </div>
+            </div>
+            <div class="mb-3">
+              <div class="form-group text-black">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="activated" id="active" th:value="true"
+                    th:checked="${user.activated==true}" />
+                  <label class="form-check-label" for="active">Còn hoạt động</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="activated" id="inactive" th:value="false"
+                    th:checked="${user.activated==false}" />
+                  <label class="form-check-label" for="inactive">Ngưng hoạt động</label>
+                </div>
+              </div>
+            </div>
+            <div style="display: none;" class="mb-3" >
+              <div class="form-group text-black">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="admin" id="admin1" value="true"
+                    th:checked="${user.admin==true}" />
+                  <label class="form-check-label" for="admin1">Admin</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="admin" id="user" value="false"
+                    th:checked="${user.admin==false}" />
+                  <label class="form-check-label" for="user">User</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group mb-3 d-flex justify-content-end">
+              <input formaction="/admin/users/update" type="submit" tabindex="4" th:disabled="${isEdit==false}"
+                class="form-control btn ms-2" value="Update">
+              <input type="submit" tabindex="4" formaction="/admin/users/reset" class="form-control btn ms-2"
+                value="Reset">
+
+            </div>
+        </div>
+        </form>
+      </div>
+    </div>
+    <!-- /Cập nhật -->
+    <!-- Danh sách -->
+    <div th:class="'tab-pane fade ' + (${form==false ? 'show active' : ''})  " id="nav-authors" role="tabpanel"
+      aria-labelledby="nav-authors-tab" tabindex="0">
+      <div class="table-top row px-0 mx-0">
+        <div class="table-top__search-set col-6 px-0">
+          <!-- <div class="search-input mt-3">
+
+            <form class="d-flex" role="search">
+              <div class="input-group">
+                <input type="text" class="form-control" id="searchInput" placeholder="Tìm kiếm" aria-label="Tìm kiếm"
+                  name="keywords" th:value="${param.keywords}">
+
+                <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                <button class="btn btn-outline-danger" type="submit" id="clearButton"><i class="bi bi-x"></i></button>
+              </div>
+            </form>
+
+          </div> -->
+        </div>
+        <div class="table-top__wordset col-6  px-0">
+          <nav class="navbar navbar-expand-lg bg-body-tertiary ">
+            <div class="container-fluid px-0">
+              <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <ul class="navbar-nav ms-auto me-0 mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="bi bi-file-earmark-pdf-fill"></i></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="bi bi-filetype-exe"></i></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="bi bi-printer-fill"></i></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="table-bottom">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr class="tb-header">
+                <th scope="col"><a th:href="@{/admin/users(field='username')}"> ID </a></th>
+                <th scope="col"><a th:href="@{/admin/users(field='password')}"> Mật khẩu</a></th>
+                <th scope="col"><a th:href="@{/admin/users(field='fullName')}"> Họ tên</a></th>
+                <th scope="col"><a th:href="@{/admin/users(field='phone')}"> SĐT</a></th>
+                <th scope="col"><a th:href="@{/admin/users(field='email')}"> Email</a></th>
+                <th scope="col"><a th:href="@{/admin/users(field='address')}"> Địa chỉ</a></th>
+                <th scope="col"><a th:href="@{/admin/users(field='activated')}"> Trạng thái</a></th>
+                <th scope="col"><a th:href="@{/admin/users(field='admin')}"> Vai trò</a></th>
+                <th scope="col"><a th:href="@{/admin/users(field='image')}"> Hình ảnh</a></th>
+                <th scope="col">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="item : ${page.content}">
+                <td th:text="${item.username}"></td>
+                <td th:text="${item.password}"></td>
+                <td th:text="${item.fullName}"></td>
+                <td th:text="${item.phone}"></td>
+                <td th:text="${item.email}"></td>
+                <td th:text="${item.address}"></td>
+                <td th:text="${item.activated ? 'Hoạt động' : 'Ngưng Hoạt Động'}"></td>
+                <td th:text="${item.admin ? 'Admin' : 'User'}"></td>
+                <td class="p-0">
+                  <img th:src="@{/assets/img/__${item.image}__}">
+                </td>
+
+                <td class="td-action ">
+                  <a th:href="@{/admin/users/edit/{username}(username=${item.username})}"
+                    class="btn action__btn-success btn-rounded"><span>Sửa</span> </a>
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+
+      </div>
+      <!-- /page -->
+      <nav aria-label="Page navigation example" class="pagination-section">
+        <div>
+          <i th:text="${page.number +1}"></i> <strong th:text="'of  '+${page.totalPages}"></strong>
+        </div>
+        <ul class="pagination">
+          <li th:class="${'page-item ' + (page.isFirst ?'disabled': '' )}">
+            <a class="page-link" th:href="@{/admin/users(p=0)}"><i class="bi bi-chevron-double-left"></i></a>
+          </li>
+          <li th:class="${'page-item ' + (not page.hasPrevious ? 'disabled' :'')}">
+            <a class="page-link" th:href="@{/admin/users(p=${page.number-1})}"><i class="bi bi-chevron-left"></i></a>
+          </li>
+          <li th:class="${'page-item ' + (not page.hasNext ? 'disabled' :'')}">
+            <a class="page-link" th:href="@{/adminusersproducts(p=${page.number+1})}"><i
+                class="bi bi-chevron-right"></i></a>
+          </li>
+          <li th:class="${'page-item ' + ( page.isLast ? 'disabled' :'')}">
+            <a class="page-link" th:href="@{/admin/users(p=${page.totalPages-1})}"><i
+                class="bi bi-chevron-double-right"></i></a>
+          </li>
+
+        </ul>
+      </nav>
+      <!-- /page -->
+    </div>
+
+    <!-- /Danh sách -->
+  </div>
+  <section class="message-section ">
+    <div
+      th:class="'toast my-3  align-items-center text-white bg-primary border-0 ' + ${message != null ? 'fade show' :''}"
+      role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          <tb:block th:text="${message}"></tb:block>
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+          aria-label="Close"></button>
+      </div>
+    </div>
+  </section>
+</div>
+</div>
