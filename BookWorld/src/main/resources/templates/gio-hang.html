@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng</title>
+
+    <th:block th:include="fragment/css-links.html"></th:block>
+    <link rel="stylesheet" th:href="@{/assets/css/gio-hang.css}">
+
+</head>
+
+<body>
+      <!-- preloder-loader -->
+
+  <!-- /preloder-loader -->
+    <div th:replace="fragment/header.html :: #header "></div>
+    <!--  -->
+    <div class="mainct mt-5 mb-5">
+        <div class="basket">
+            <a th:href="@{/cart/clear}" style="font-size: 18px; border-radius: 10px ;"
+                class="btn btn-danger">Xóa tất cả</a>
+            <div class="basket-labels">
+                <ul>
+                    <li class="item item-heading">Sản phẩm</li>
+                    <li class="price">Giá</li>
+                    <li class="quantity">Số lượng</li>
+                    <li class="subtotal">Tổng</li>
+
+                </ul>
+            </div>
+            <div class="basket-product" th:each="prod,pStat: ${list}">
+                <div class="item">
+                    <div class="product-image">
+                        <img th:src="@{/assets/img/__${prod.image}__}" alt="Placholder Image 2" height="148px"
+                            class="product-frame">
+                    </div>
+                    <div class="product-details">
+                        <h1 class="td_titleBook"><strong th:text="${prod.book.title}"> </strong>
+                        </h1>
+                    </div>
+                </div>
+                <div class="price"><span class="td-giaGiam" th:text="${prod.book.price}"></span>
+                    <!-- <p><del class="td-giaCu">86.000</del></p> -->
+                </div>
+                <form th:action="@{/cart/update/{id} (id = ${prod.id})}" method="post">
+                    <div class="quantity">
+                        <input type="number" id="example"
+                            name="qty" min="1" th:max="${prod.book.quantity}" step="1"
+                            th:onblur="this.form.submit()"
+                            th:value="${prod.quantity}"
+                            pattern="\d+" class="input-number">
+                    </div>
+                    <div class="subtotal td-giaTong" th:text="${prod.totalPrice}">0</div>
+<!--   -->      </form>
+                <div class="remove">
+                    <!-- <a  class="btn-delete"><i class="bi bi-trash3"></i></a>   -->
+                    <a  th:href="@{/cart/remove/{id}(id=${prod.id})}"  class="removeBtn"><i class="bi bi-trash3"></i></a > 
+                </div>
+            </div>
+
+        </div>
+        <aside>
+            <div class="summary">
+                <div class="summary-total-items">Thông Tin Khách Hàng</div>
+                <form action="/cart/payment" method="post" th:object="${user}">
+                <div class="summary-delivery ">
+                    <div class="mb-5">
+                        <label for="fullname" class="form-label">Họ và tên</label>
+                        <input type="text" name="fullName" th:readonly="${session.user!=null?true:false}" class="form-control" id="fullname"  th:value="${session.user != null? session.user.fullName:''}" placeholder="Nhập họ và tên">
+                    </div>
+                    <div class="mb-5">
+                        <label for="" class="form-label">Số điện thoại</label>
+                        <input type="text" class="form-control" name="phone" id=""  th:value="${session.user != null? session.user.phone:''}" placeholder="Nhập số điện thoại">
+                    </div>
+                    <div class="mb-1">
+                        <label for="address" class="form-label">địa chỉ</label>
+                        <input type="text" class="form-control" name="address" id="address" th:value="${session.user != null? session.user.address:''}" placeholder="Nhập địa chỉ">
+                    </div>
+                </div>
+                <div class="subtotal-title fw-bold">Phương Thức Thanh Toán</div>
+                <div class="mt-1 mb-5 td-khung">
+
+                    <div class="td-khung1 ">
+                        <div class="fhs-radio-big-with-icon-container">
+                            <label class="fhs-radio-big fhs-raido-big-with-icon">
+                                <div class="fhs-payment-name-with-icon-container">
+                                    <img src="https://cdn0.fahasa.com/skin/frontend/base/default/images/payment_icon/ico_cashondelivery.svg?q=102205"
+                                        alt="">
+                                    <div class="fhs-payment-name" style="width: 139px;">Thanh toán bằng tiền mặt
+                                    </div>
+                                    <input style="display: none;" type="radio" name="paymentMethod"
+                                        class="fhs_checkout_paymentmethod_option" value="tienmat" checked="checked">
+                                    <span class="radiomark-big"></span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="fhs-radio-big-with-icon-container">
+                            <label class="fhs-radio-big fhs-raido-big-with-icon">
+                                <div class="fhs-payment-name-with-icon-container">
+
+                                    <img src="https://cdn0.fahasa.com/skin/frontend/base/default/images/payment_icon/ico_zalopayatm.svg?q=102248"
+                                        alt="">
+                                    <div class="fhs-payment-name">ATM / Internet Banking</div>
+                                    <input style="display: none;" type="radio" name="paymentMethod"
+                                        class="fhs_checkout_paymentmethod_option" value="online">
+                                    <span class="radiomark-big"></span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="summary-total">
+                    <div class="total-title">Tổng</div>
+                    <div class="total-value final-value td-giaGiam" id="basket-total" th:text="${session.cartTotal != null ?session.cartTotal: '0.0'}"></div>
+                </div>
+                <div class="summary-checkout">
+                    <button class="checkout-cta">Đặt Hàng</button>
+                </div>
+            </form>
+            <span th:if="${error != null}" style="font-size: 15px; color: red; margin-top: 10px;" th:text="${error}"></span>
+            <span th:if="${isEmptyCarts != null}" style="font-size: 15px; color: red; margin-top: 10px;" th:text="${isEmptyCarts}"></span>
+            </div>
+        </aside>
+    </div>
+    <section class="message-section ">
+        <div th:class="'toast my-3  align-items-center text-white bg-primary border-0 ' + ${message != null ? 'fade show' :''}" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex">
+            <div class="toast-body">
+              <tb:block th:text="${message}"></tb:block>
+              <a th:if="${typeSuccess == 'payment-cart'}" class="btn btn-primary" th:href="@{/user/orders}" role="button">Xem đơn hàng</a>
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>
+      </section>
+      
+    <!--  -->
+    <div th:replace="fragment/footer.html :: #footer"></div>
+    <th:block th:include="fragment/script-links.html"></th:block>
+    <script th:src="@{/assets/js/gio-hang.js}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+</body>
+
+</html>

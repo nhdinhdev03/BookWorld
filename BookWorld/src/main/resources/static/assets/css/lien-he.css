@@ -1,0 +1,21 @@
+.dbox .icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #2553b8;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.dbox .icon span {
+  font-size: 20px;
+  color: #fff;
+}
+
+.bg {
+  border-radius: 5px;
+  background-color: aliceblue;
+}
+.wrapper{
+
+}

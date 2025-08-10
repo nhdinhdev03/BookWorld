@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <th:block th:include="fragment/css-links.html"></th:block>
+    <link rel="stylesheet" th:href="@{/assets/css/edit-profile.css}">
+
+</head>
+
+<body>
+
+    <main>
+        <!-- Header -->
+        <div th:replace="fragment/header.html :: #header " ></div>
+        <!-- /Header -->
+        <div class="container-xl px-4 mt-5 mb-5 d-flex justify-content-center ">
+            <!-- Account page navigation-->
+            <div class="row w-75">
+
+                <div class="col-xl-12">
+                    <!-- Account details card-->
+                    <div class="card mb-4 ">
+                        <div class="card-header">Account Details</div>
+                        <div class="card-body">
+                            <form class="form-section" th:action="@{/account/profile}" method="post" th:object="${user}"
+                                enctype="multipart/form-data">
+                                <div class="avatar-upload">
+
+                                    <div class="avatar-upload">
+                                        <div class="avatar-preview">
+                                            <img id="avatar-img" th:src="@{/assets/img/__${user.image}__}" alt="Avatar Preview" />
+                                        </div>
+                                        <div class="avatar-edit">
+                                            <input type="file" name="fileImage" id="avatar" accept=".jpg, .jpeg, .png, .webp" />
+                                            <label for="avatar">Hình ảnh</label>
+                                        </div>
+                                    </div>
+                                
+                                </div>
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="fullName">Họ và tên <span>
+                                    </label>
+                                    <input class="form-control" id="fullName" type="text"
+                                        placeholder="Enter your fullName" name="fullName" th:field="*{fullName}">
+                                    <!-- lỗi -->
+                                    <div class="alert alert-warning " th:if="${#fields.hasErrors('fullName')}"
+                                        th:errors="*{fullName}">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="phone">Số điện thoại<span>
+                                    </label>
+                                    <input class="form-control" id="phone" type="text" placeholder="Enter your phone"
+                                        th:field="*{phone}">
+                                    <div class="alert alert-warning " th:if="${#fields.hasErrors('phone')}"
+                                        th:errors="*{phone}">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="email">Email <span></label>
+                                    <input class="form-control" id="email" type="email" placeholder="Enter your email"
+                                        name="email" th:field="*{email}">
+                                        <div class="alert alert-warning " th:if="${#fields.hasErrors('email')}"
+                                        th:errors="*{email}">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="address">Địa chỉ<span>
+                                    </label>
+                                    <input class="form-control" id="address" type="text" placeholder="Enter your phone"
+                                        name="address" th:field="*{address}">
+                                        <div class="alert alert-warning " th:if="${#fields.hasErrors('address')}"
+                                        th:errors="*{address}">
+                                    </div>
+                                </div>
+
+
+                                <div class="row gx-3 mb-3">
+
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="UserName">UserName<span></label>
+                                        <input class="form-control" id="UserName" type="text"
+                                            placeholder="Enter your username" th:field="*{username}" readonly>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="UserName">Mật Khẩu</label>
+                                        <input type="text" name="password" id="youtube-title" tabindex="2"
+                                            class="form-control" placeholder="password" th:field="*{password}" readonly>
+                                    </div>
+                                </div>
+
+                    
+                                <div style="display: none;" class="mb-3">
+                                    <div class="form-group text-black">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" th:field="*{activated}" id="admin" value="true" />
+                                            <label class="form-check-label" for="admin">Hoạt Động</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" th:field="*{activated}" id="user" value="false" />
+                                            <label class="form-check-label" for="user">Ngưng Hoạt Động</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                                <div style="display: none;" class="mb-3">
+                                    <div class="form-group text-black">
+                                        <div class="form-check form-check-inline" th:if="${session.user.admin == true}">
+                                            <input class="form-check-input" type="radio" th:field="*{admin}" id="admin1"
+                                                value="true" />
+                                            <label class="form-check-label" for="admin1">Admin</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" th:field="*{admin}" id="user"
+                                                value="false" />
+                                            <label class="form-check-label" for="user">User</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                     
+                               
+                                <div class="cardbtn">
+                                    <a class="btn btn-primary" th:href="@{/admin/index}" th:if="${isAdmin}" >Quay Lại</a>
+                                    <button class="btn btn-primary">Lưu</button>                                                               
+                                    <a class="btnCP" th:href="@{/account/change-password}">Đổi Mật Khẩu</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <!--footer  -->
+        <div th:replace="fragment/footer.html :: #footer"></div>
+        <!--/footer  -->
+    </main>
+    <script th:src="@{/assets/js/edit-profile.js}"></script>
+
+</body>
+
+</html>

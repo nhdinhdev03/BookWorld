@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" th:href="@{/assets/css/form.css}">
+  <th:block th:include="fragment/css-links.html"></th:block>
+</head>
+<style>
+@charset "UTF-8";
+.dialog-overlay {
+  position: fixed;
+	top: 0;
+	right: 0; /* Thay đổi từ left: 0 thành right: 0 */
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: flex-end;
+	justify-content: flex-end; /* Thay đổi từ justify-content: flex-start thành justify-content: flex-end */
+	z-index: 9999;
+}
+
+.dialog-content {
+	border-radius: 10px;
+	font-weight: bolder;
+	color: white;
+	background-color: #429A43;
+	margin: 20px;
+	padding: 10px;
+	padding-top: 25px;
+	max-width: 1000px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	color: white;
+}
+
+.dialog-content-failed {
+	border-radius: 10px;
+	font-weight: bolder;
+	color: white;
+	background-color: #FF0000;
+	margin: 20px;
+	padding: 10px;
+	padding-left: 100px;
+	padding-right: 100px;
+	padding-top: 25px;
+	max-width: 1000px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	color: white;
+}
+
+</style>
+<body>
+  <!-- Header -->
+  <div th:replace="fragment/header.html :: #header "></div>
+  <!-- /Header -->
+  <div class="container py-5  d-flex justify-content-center align-items-center" style="height: 110vh;">
+    <div class="form-wrapper w-100  d-flex justify-content-center align-items-center">
+      <div class="card w-50">
+        <div class="card-header">
+          <div class="text-center">
+            <nav>
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                  type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Đăng ký</button>
+
+              </div>
+            </nav>
+          </div>
+        </div>
+
+        <div th:if="${message}" class="success-message">
+          <p th:text="${message}"></p>
+      </div>
+      
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col-lg-12 ">
+              <!-- Login -->
+              <div class="tab-content active" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-profile" role="tabpanel"
+                  aria-labelledby="nav-profile-tab">
+                  <form class="form-account form-section" th:action="@{/account/sign-up}" th:object="${user}"
+                    method="post">
+                    <!--  -->
+                    <div class="form-group mb-3">
+                      <input type="text" name="username" th:field="*{username}" id="username" tabindex="1" class="form-control"
+                        placeholder="Tên đăng nhập" >
+                      <div class="alert alert-warning" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>       
+                              
+                    </div>
+                    <p th:text="${error}" style="color: red; text-align: center;"></p>   
+                    <!--  -->
+                    <!--  -->
+                    <div class="form-group mb-3">
+                      <input type="text" name="fullName" th:field="*{fullName}" id="fullName" tabindex="1"
+                        class="form-control" placeholder="Họ tên">  
+                      <div class="alert alert-warning" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">
+                      </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <input type="text" name="phone" th:field="*{phone}" id="phone" tabindex="1"
+                        class="form-control" placeholder="Phone">
+                      <div class="alert alert-warning" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">
+                      </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <input type="text" name="address" th:field="*{address}" id="address" tabindex="1"
+                        class="form-control" placeholder="Địa chỉ">
+                      <div class="alert alert-warning" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">
+                      </div>
+                    </div>
+                    <!--  -->
+                    <!--  -->
+                    <div class="form-group mb-3">
+                      <input type="email" name="email"  id="email" tabindex="1" class="form-control"
+                        placeholder="Địa chỉ email"  th:field="*{email}">
+                        <div class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div> 
+                    </div>
+                    <p th:text="${errors}" style="color: red; text-align: center;"></p>
+                    <!--  -->
+                    <div class="form-group mb-3">
+                      <input type="password" name="password" th:field="*{password}" id="password" tabindex="2"
+                        class="form-control" placeholder="Mật khẩu">
+                      <div class="alert alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                      </div> 
+                    </div>
+                    <!--  -->
+                    <div class="form-group mb-3">
+                      <input type="hidden" name="admin" value="false" tabindex="2" placeholder="">
+                    </div>
+                    <div class="form-group mb-3">
+                      <div class="row">
+                        <div class="col-sm-12 d-flex justify-content-center ">
+                          <input type="submit" name="register-submit" id="register-submit" tabindex="4"
+                            class="form-control btn btn-register" value="Đăng ký ngay">
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+
+                </div>
+                <div class=" d-flex justify-content-center">
+                  <a th:href="@{/account/login}" class="text-black btn-back-home"> <i class="fa-solid fa-arrow-left"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+	<div th:if="${failed}" id="successDialog" class="dialog-overlay">
+		<div class="dialog-content-failed">
+			<p th:text="${failed}"></p>
+		</div>
+	</div>
+  <!--footer  -->
+  <div th:replace="fragment/footer.html :: #footer"></div>
+  <!--/footer  -->
+  <th:block th:include="fragment/script-links.html"></th:block>
+</body>
+<script th:inline="javascript">
+  setTimeout(function() {
+    document.getElementById("successDialog").style.display = "none";
+  }, 1500); // 5000 milliseconds = 5 seconds
+</script>
+</html>

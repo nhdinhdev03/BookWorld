@@ -1,0 +1,403 @@
+<div class="card page-wrapper">
+  <div class="card-body">
+    <div class="page-title">Sách</div>
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button th:class="'nav-link ' + (${form} == true? 'active':'')" id="nav-form-tab" data-bs-toggle="tab"
+          data-bs-target="#nav-form" type="button" role="tab" aria-controls="nav-form" aria-selected="false">Cập
+          nhật</button>
+        <button th:class="'nav-link ' + (${form} == false? 'active':'')" id="nav-authors-tab" data-bs-toggle="tab"
+          data-bs-target="#nav-authors" type="button" role="tab" aria-controls="nav-authors" aria-selected="true">Danh
+          sách</button>
+      </div>
+     
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <!-- Cập nhật -->
+      <div th:class="'tab-pane fade ' + (${form} == true? 'show active':'') " id="nav-form" role="tabpanel"
+        aria-labelledby="nav-form-tab" tabindex="0">
+        <div class="form-wrapper form-center">
+          <form class="form-section" action="/admin/products/create" method="post" th:object="${book}"
+            enctype="multipart/form-data">
+            <div class="row">
+              <div class="form-group mb-3 col-6">
+                <input type="text" th:field="*{id}" id="youtube-id" tabindex="1" th:readonly="${isEdit}"
+                  class="form-control" placeholder="Mã sách" th:value="${id}">
+                <div class="message-errors" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></div>
+                <div class="message-errors" th:text="${isExist}"></div>
+              </div>
+              <div class="form-group mb-3 col-6">
+                <input type="text" th:field="*{title}" id="youtube-title" tabindex="2" class="form-control"
+                  placeholder="Tên sách" value="">
+                <div class="message-errors" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+              </div>
+
+              <div class="form-group mb-3 col-6">
+                <select class="form-select" th:field="*{category}">
+                  <option th:each="item : ${listCat}" th:value="${item.id}" th:text="${item.categoryName}"></option>
+                </select>
+              </div>
+
+              <div class="form-group mb-3 col-6">
+                <select class="form-select" th:field="*{publisher}">
+                  <option th:each="item : ${listPub}" th:value="${item.id}" th:text="${item.publisherName}"></option>
+                </select>
+              </div>
+
+              <div class="form-group mb-3 col-6">
+                <input type="text" name="views" id="view-count" th:field="*{price}" tabindex="1" class="form-control"
+                  placeholder="Đơn giá" value="">
+                <div class="message-errors" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+              </div>
+              <div class="form-group mb-3 col-6">
+                <input type="number" name="views" id="view-count" th:field="*{quantity}" tabindex="1" step="1" min="0"
+                  class="form-control" placeholder="Số lượng" >
+                <div class="message-errors" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></div>
+                <div class="message-errors" th:if="${errorQuantity != null}" th:text="${errorQuantity}"></div>
+              </div>
+              <div class="form-group mb-3 col-6">
+                <input type="date" th:field="*{createdDate}" readonly class="form-control ">
+              </div>
+              <div class="mb-3 col-6">
+                <div class="input-group mb-3">
+                  <input type="file" name="fileImage" class="form-control" id="inputGroupFile02">
+                  <label class="input-group-text" for="inputGroupFile02">Hình ảnh </label>
+                </div>
+                <div class="message-errors" th:text="${errorImg}"></div>
+              </div>
+            </div>
+
+            <div class="form-group mb-3 col-12">
+             <div class="row">
+              <div class="col-8">
+                <div class=" row">
+                  <div class="col-auto">
+                    <label class="form-label " for="">Trạng thái: </label>
+                  </div>
+                  <div class="col-auto">
+                    <div class="form-group text-black">
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" th:field="*{status}" value="1"  id="status">
+                        <label class="form-check-label" for="status">Còn hàng </label>
+                      </div>
+                      <div class="form-check form-check-inline" th:if="${isEdit}">
+                        <input class="form-check-input" type="radio" th:field="*{status}"id="status2"  value="0">
+                        <label class="form-check-label" for="status2">Hết hàng</label>
+                      </div>
+                      <div class="form-check form-check-inline" th:if="${isEdit}">
+                        <input class="form-check-input" type="radio" th:field="*{status}" id="status3" value="2">
+                        <label class="form-check-label" for="status3">Ngừng kinh doanh</label>
+                      </div>
+                    </div>
+  
+                    <div class="message-errors" th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></div>
+                  </div>
+  
+                </div>
+              </div>
+              
+              <div class="form-group mb-3 col-4">
+                <input  type="button" tabindex="4" class="form-control btn ms-2 w-100" data-bs-toggle="modal"
+                data-bs-target="#modalAuthors"   value="Tác giả">
+                <div class="message-errors" th:if="${nullAuthor != null}" th:text="${nullAuthor}"></div>
+              </div>
+            </div>
+            
+             </div>
+          
+            <div class="form-group mb-3 text-black col-12">
+              <textarea class="form-control" th:field="*{description}" id="description1" placeholder="Mô tả"
+                rows="4"></textarea>
+            </div>
+
+            <div class="form-group mb-3 d-flex justify-content-end">
+              <input th:disabled="${isEdit}" type="submit"class="form-control btn ms-2" value="Create">
+              <input th:disabled="${!isEdit}" th:formaction="@{/admin/products/update}" type="submit" 
+                class="form-control btn ms-2" value="Update">
+              <a  th:href="@{/admin/products/delete/{id} (id = ${book.id})}"  th:class="'form-control btn ms-2 '+ ${!isEdit ?'disabled' :''}"
+                >Delete</a>
+              <a th:href="@{/admin/products/reset}" class="form-control btn ms-2">Reset</a>
+            </div>
+               <!-- Xem tác giả thuộc sách -->
+    <div class="modal fade"id="modalAuthors" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              <span th:if="${!isEdit}"> Tác giả</span>
+              <span th:if="${isEdit}"> Tác giả thuộc sách</span>
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+            <div class="modal-body">
+              <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                  <button th:class="'nav-link ' + ${isEdit? 'active':''}" id="nav-delete-author-tab" data-bs-toggle="tab" data-bs-target="#nav-delete-author" type="button" role="tab" aria-controls="nav-delete-author" aria-selected="false" th:if="${isEdit}">Xóa tác giả</button>
+                  <button th:class="'nav-link ' + ${!isEdit? 'active':''}" id="nav-add-author-tab" data-bs-toggle="tab" data-bs-target="#nav-add-author" type="button" role="tab" aria-controls="nav-add-author" aria-selected="false">Thêm tác giả</button>
+                </div>
+              </nav>
+              <div class="tab-content" id="nav-tabContent">
+                <!-- Tab xóa tác giả -->
+                <div th:class="'tab-pane fade ' + ${isEdit ? 'show active' :''} " id="nav-delete-author" role="tabpanel" aria-labelledby="nav-delete-author-tab">
+                  <!-- Table -->
+                  <div class="table-responsive py-2">
+                    <table class="table w-100 table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">Tên tác giả</th>
+                          <th scope="col">Thao tác</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:each="item : ${listAutOfBook}">
+                          <td th:text="${item.id}"></td>
+                          <td th:text="${item.authorName}"></td>
+                          <td > 
+                            <a class="btn btn-primary w-100"   data-bs-toggle="modal" th:data-bs-target="'#modal_accept_'+${item.id}" role="button">Xóa khỏi sách</a>
+                          </td>
+
+                        
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- /Table -->
+                </div>
+                <!-- /Tab xóa tác giả -->
+                <!-- Tab Thêm tác giả -->
+                <div th:class="'tab-pane fade ' + ${!isEdit ? 'show active' :''} " id="nav-add-author" role="tabpanel" aria-labelledby="nav-add-author-tab">
+                  <!-- Table -->
+                  <div class="table-responsive py-2">
+                    <table class="table w-100 table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col" >#</th>
+                          <th scope="col">ID</th>
+                          <th scope="col">Tên tác giả</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:each="item : ${listAut}">
+                          <td scope="row"  >
+                            <div class="form-check">
+                              <label class="form-check-label" th:for="'checkbox_'+${item.id}" style="width: 100%; height: 100%;">
+                                <input class="form-check-input" name="authors" type="checkbox"  th:value="${item.id}" th:id="'checkbox_'+${item.id}">
+                              </label>
+                            </div>
+                          </td>
+                        
+                          <td> <label th:for="'checkbox_'+${item.id}"  th:text="${item.id}"></label></td>
+                          <td ><label th:for="'checkbox_'+${item.id}"  th:text="${item.authorName}"></label></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- /Table -->
+                </div>
+                  <!-- /Tab thêm tác giả -->
+              </div>
+                
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+      </div>
+    </div>
+    <!--/ Xem tác giả thuộc sách -->
+    <!-- Modal -->
+          </form>
+        </div>
+      </div>
+      <!-- /Cập nhật -->
+      <!-- Danh sách -->
+      <div th:class="'tab-pane fade ' + (${form} == false ? 'show active':'' )" id="nav-authors" role="tabpanel"
+        aria-labelledby="nav-authors-tab" tabindex="0">
+        <div class="table-top row px-0 mx-0">
+          <div class="table-top__search-set col-6 px-0">
+            <div class="search-input mt-3">
+
+              <form class="d-flex" role="search">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="searchInput" placeholder="Tìm kiếm" aria-label="Tìm kiếm"
+                    name="keywords" th:value="${param.keywords}">
+                  <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                  <button class="btn btn-outline-dark" type="submit" id="clearButton"><i class="bi bi-x"></i></button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+          <div class="table-top__wordset col-6  px-0">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary ">
+              <div class="container-fluid px-0">
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                  <ul class="navbar-nav ms-auto me-0 mb-2 mb-lg-0">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#"><i class="bi bi-file-earmark-pdf-fill"></i></a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#"><i class="bi bi-filetype-exe"></i></a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#"><i class="bi bi-printer-fill"></i></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <div class="table-bottom">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr class="tb-header">
+                  <th scope="col"><a th:href="@{/admin/products(field='id')}">ID </a></th>
+                  <th scope="col"><a th:href="@{/admin/products(field='title')}">Tên sách</a></th>
+                  <!-- <th scope="col">Tác giả</th> -->
+                  <th scope="col"><a th:href="@{/admin/products(field='category')}">Danh mục</a></th>
+                  <th scope="col"><a th:href="@{/admin/products(field='publisher')}">NXB</a></th>
+                  <th scope="col"><a th:href="@{/admin/products(field='createdDate')}">Ngày tạo</a></th>
+                  <th scope="col"><a th:href="@{/admin/products(field='price')}">Đơn giá</a></th>
+                  <th scope="col"><a th:href="@{/admin/products(field='quantity')}">Số lượng</a></th>
+                  <th scope="col"><a th:href="@{/admin/products(field='image')}">Ảnh</a></th>
+                  <th scope="col"><a th:href="@{/admin/products(field='status')}">Trạng thái</a></th>
+                  <th scope="col"><a th:href="@{/admin/products(field='description')}">Mô tả</a></th>
+                  <th scope="col">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="" th:each="item : ${page.content}">
+                  <td th:text="${item.id}"></td>
+                  <td th:text="${item.title}"></td>
+                  <!-- <td  th:text="${item.authorBooks.author.authorName}"></td> -->
+                  <td th:text="${item.category.categoryName}"></td>
+                  <td th:text="${item.publisher.publisherName}"></td>
+                  <td th:text="${item.createdDate}"></td>
+                  <td th:text="${item.price}"></td>
+                  <td th:text="${item.quantity}"></td>
+                  <td class="p-0">
+                    <div class="td-box-img">
+                      <img th:src="@{/assets/img/__${item.image}__}" alt="">
+                    </div>
+                  </td>
+                  <td >
+                    <span th:if="${item.status == 0}">Hết hàng</span>
+                    <span th:if="${item.status == 1}">Còn hàng</span>
+                    <span th:if="${item.status == 2}">Ngừng kinh doanh</span>
+                  </td>
+                  <td class="reduce-td" th:text="${item.description}"></td>
+                  <td class="td-action ">
+                    <a href="" class="btn action__btn-info btn-rounded " data-bs-toggle="modal"
+                      th:data-bs-target="'#modal_'+${item.id}"><span>Chi tiết</span> </a>
+                    <a th:href="@{/admin/products/edit/{id} (id = ${item.id})}"
+                      class="btn action__btn-success btn-rounded"><span>Sửa</span> </a>
+                    <a th:href="@{/admin/products/delete/{id} (id = ${item.id})}"
+                      class="btn action__btn-danger btn-rounded"><span>Xóa</span></a>
+                  </td>
+                  <td>
+                    <!-- Chi tiết tác giả -->
+                    <div class="modal fade" th:id="'modal_'+${item.id}" tabindex="-1" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Tác giả</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <strong class="book-title-modal"></strong>
+                            <span th:text="${item.title}" class="badge bg-danger mb-3">New</span>
+                            <div class="table-responsive">
+                              <table class="table table-hover text-center">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Tên tác giả</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr class="" th:each="t : ${item.authorBooks}">
+                                    <td th:text="${t.author.id}">Item</td>
+                                    <td th:text="${t.author.authorName}">Item</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /Chi tiết tác giả -->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+        <!-- /page -->
+        <nav aria-label="Page navigation example" class="pagination-section mt-2" >
+          <div class="text">
+            <i th:text="${page.number +1}"></i> <strong th:text="'of  '+${page.totalPages}"></strong>
+          </div>
+          <ul class="pagination" >
+            <li th:class="${'page-item ' + (page.isFirst ?'disabled': '' )}" >
+              <a class="page-link" th:href="@{/admin/products(p=0)}"><i class="bi bi-chevron-bar-left"></i></a>
+            </li>
+            <li th:class="${'page-item ' + (not page.hasPrevious ? 'disabled' :'')}">
+              <a class="page-link" th:href="@{/admin/products(p=${page.number-1})}" ><i class="bi bi-chevron-left"></i></a>
+            </li>
+            <li th:class="${'page-item ' + (not page.hasNext ? 'disabled' :'')}">
+              <a class="page-link"  th:href="@{/admin/products(p=${page.number+1})}"><i class="bi bi-chevron-right"></i></a>
+            </li>
+            <li th:class="${'page-item ' + ( page.isLast ? 'disabled' :'')}">
+              <a class="page-link" th:href="@{/admin/products(p=${page.totalPages-1})}"><i class="bi bi-chevron-bar-right"></i></a>
+            </li>
+          </ul>
+      </nav>
+        <!-- /page -->
+      </div>
+      <!-- /Danh sách -->
+    </div>
+    
+
+            <!-- Xác nhận xóa tác giả -->
+            <th:block th:each="item : ${listAutOfBook}">
+              <!-- Modal -->
+              <div class="modal fade" th:id="'modal_accept_' + ${item.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog  modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Bạn có chắc chắc muốn xóa tác giả khỏi sách?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                      <a  class="btn btn-primary" th:href="@{/admin/products/delete-author-of-book(bookId=${book.id}, authorId=${item.id})}">Chắc chắn</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </th:block>
+              <!-- /Xác nhận xóa tác giả -->
+
+  </div>
+</div>
+<section class="message-section ">
+  <div th:class="'toast my-3  align-items-center text-white bg-primary border-0 ' + ${message != null ? 'fade show' :''}" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        <tb:block th:text="${message}"></tb:block>
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</section>

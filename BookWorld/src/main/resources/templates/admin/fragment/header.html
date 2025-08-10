@@ -1,0 +1,70 @@
+<header id="header">
+    <div class="row mx-0">
+        <!-- header-left -->
+        <div class="header-left col-lg-2">
+            <div class="header-left__logo">
+                <div class="logo-box">
+                    <img th:src="@{/admin/img/Bookworld.png}" alt="">
+                </div>
+            </div>
+        </div>
+        <!-- /header-left -->
+        <!-- header-right -->
+        <div class="header-right col-lg-10">
+            <div class="row">
+                <nav class="header-right__navbar navbar navbar-expand-lg bg-body-tertiary">
+                    <div class="container-fluid pe-0">
+                        <div class="collapse navbar-collapse">
+                            <form class="d-flex" role="search">
+                                <div class="header-search-inputs">
+                                    <input class="form-control me-2 header-right__input-search" type="search"
+                                        placeholder="Tìm kiếm..." aria-label="Search">
+                                    <button class="btn btn-outline-success header-right__btn-search" type="submit"><i
+                                            class="bi bi-search"></i></button>
+                                </div>
+                            </form>
+                            <ul class="navbar-nav ms-auto me-0 mb-2 mb-lg-0 header-right__list">
+                                <li class="nav-item dropdown  list__btn">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        <i class="bi bi-globe2"></i>
+                                    </a>
+                                    <ul class="dropdown-menu" style="margin-top: 2px;">
+                                        <li><a class="dropdown-item" href="#">Tiếng Việt</a></li>
+                                        <li><a class="dropdown-item" href="#">Tiếng anh</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown list-user" >
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        <span class="list-user__user-info">
+                                            <span class="user-letter">
+                                                 <img th:src="@{/assets/img/__${session.user.image}__}">
+                                            </span>
+                                            <span class="user-detail">
+                                                <div th:text="${session.user.fullName}"></div>
+                                                <span class="user-role">Admin</span>
+                                            </span>
+                                        </span>
+                                    </a>
+
+                                    <ul class="dropdown-menu" style="margin-top: -1px;">
+                                        <li><a class="dropdown-item" th:href="@{/account/profile}"><i
+                                                    class="bi bi-person"></i> Hồ sơ</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a th:href="@{/account/logout}">Đăng xuất</a></li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- /header-right -->
+    </div>
+
+</header>

@@ -1,0 +1,264 @@
+<section id="product">
+
+
+    <!-- Featured Section Begin -->
+    <section class="featured spad1">
+        <div class="container">
+            <div class="row featured__filter">
+                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat" th:each="item : ${page.content}">
+                    <div class=" featured__item">
+                        <div class="featured__item__pic set-bg">
+                            <a th:href="@{/chitiet/{bookId}(bookId=${item.id})}"> <img
+                                    th:src="@{/assets/img/__${item.image}__}" alt=""> </a>
+                            <ul class="featured__item__pic__hover">
+
+                                <li><a th:href="@{/themYeuThich/{bookId}(bookId=${item.id})}"><i
+                                            class="fa fa-heart"></i></a>
+                                </li>
+                                <li><a href="" data-bs-toggle="modal" th:data-bs-target="'#modal_'+${item.id}"><i
+                                            class="fa-solid fa-share"></i></a></li>
+                                <li th:if="${item.status == 1}" ><a th:href="@{/cart/add/__${item.id}__}"><i class="fa fa-shopping-cart"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a th:href="@{/chitiet/{bookId}(bookId=${item.id})}" th:text="${item.title}"></a></h6>
+                            <div class="row">
+                                <div class="col-12"><span style="color: red; font-size: 15px;" th:text="${item.price}  +' VNĐ'"></span></div>
+                                <div class="col-12">
+                                    <span th:if="${item.status == 0}"  style="color: rgb(238, 82, 31); font-size: 10px;">Hết hàng</span>
+                                    <span th:if="${item.status == 2}"  style="color: red; font-size: 12px;">Ngừng kinh doanh</span>
+                                </div>
+                            </div>
+                            
+                         
+                        </div>
+                        <div class="ribben">
+                            <p>NEW</p>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class=" modal fade" th:id="'modal_'+${item.id}" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <form method="post">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Chia sẻ sách: <strong
+                                                th:text="${item.title}"></strong> </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label class="label" for="email">Email Address</label>
+                                            <input type="email" class="form-control" name="emailShare" id="email"
+                                                placeholder="Email" required>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button th:attr="formaction=@{/share/{bookId}(bookId=${item.id})}" type="submit"
+                                            class="btn btn-primary">Save
+                                            changes</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                    <!-- /model -->
+                </div>
+                <nav aria-label="Page navigation example" class="pagination-section"
+                    style=" position: relative; height: 50px;">
+                    <div style="  position: absolute; right: 320px; top: 13px;">
+                        <i th:text="${page.number +1}"></i> <strong th:text="'of  '+${page.totalPages}"></strong>
+                    </div>
+                    <ul class=" pagination" style=" position: absolute; padding-top: 10px; right: 50px;">
+                        <li style="width: 50px;" th:class="${'page-item ' + (page.isFirst ?'disabled': '' )}">
+                            <a class="page-link" th:href="@{/index(p=0)}"><i class="bi bi-chevron-double-left"></i></a>
+                        </li>
+                        <li style="width: 50px;" th:class="${'page-item ' + (not page.hasPrevious ? 'disabled' :'')}">
+                            <a class="page-link" th:href="@{/index(p=${page.number-1})}"><i
+                                    class="bi bi-chevron-left"></i></a>
+                        </li>
+                        <li style="width: 50px;" th:class="${'page-item ' + (not page.hasNext ? 'disabled' :'')}">
+                            <a class="page-link" th:href="@{/index(p=${page.number+1})}"><i
+                                    class="bi bi-chevron-right"></i></a>
+                        </li>
+                        <li style="width: 50px;" th:class="${'page-item ' + ( page.isLast ? 'disabled' :'')}">
+                            <a class="page-link" th:href="@{/index(p=${page.totalPages-1})}"><i
+                                    class="bi bi-chevron-double-right"></i></a>
+                        </li>
+                    </ul>
+                </nav>
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Button trigger modal -->
+
+    <!-- Featured Section End -->
+
+
+
+
+
+    <!-- Featured Section Begin -->
+    <!-- <section class="featured spad2">
+        <div class="container">
+            <div class="row featured__filter">
+                <h2 th:text="${name2}" style="border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 20px;">
+                </h2>
+                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat" th:each="item : ${page1.content}">
+                    <div class=" featured__item">
+                        <div class="featured__item__pic set-bg">
+                            <a th:href="@{/chitiet/{bookId}(bookId=${item.id})}"> <img
+                                    th:src="@{/assets/img/__${item.image}__}" alt=""> </a>
+                            <ul class="featured__item__pic__hover">
+
+                                <li><a th:href="@{/themYeuThich/{bookId}(bookId=${item.id})}"><i
+                                            class="fa fa-heart"></i></a>
+                                </li>
+                                <li><a href="" data-bs-toggle="modal" th:data-bs-target="'#modal_'+${item.id}"><i
+                                            class="fa-solid fa-share"></i></a></li>
+                                <li><a><i class="fa fa-shopping-cart"></i></a>
+                                </li>
+                            </ul>
+
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a th:href="@{/chitiet/{bookId}(bookId=${item.id})}" th:text="${item.title}"></a></h6>
+                            <h4 th:text="${item.price}  +' VNĐ'"></h4>
+
+                        </div>
+                        <div class="ribben">
+                            <p>NEW</p>
+                        </div>
+                    </div>
+                   
+                    <div class=" modal fade" th:id="'modal_'+${item.id}" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <form method="post">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Chia sẻ sách: <strong
+                                                th:text="${item.title}"></strong> </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label class="label" for="email">Email Address</label>
+                                            <input type="email" class="form-control" name="emailShare" id="email"
+                                                placeholder="Email" required>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button th:attr="formaction=@{/share/{bookId}(bookId=${item.id})}" type="submit"
+                                            class="btn btn-primary">Save
+                                            changes</button>
+
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                   
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </section> -->
+    <!-- Featured Section End -->
+
+
+    <!-- Featured Section Begin -->
+    <!-- <section class="featured spad3">
+        <div class="container">
+            <div class="row featured__filter">
+                <h2 th:text="${name3}" style="border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 20px;">
+                </h2>
+                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat" th:each="item : ${page2.content}">
+                    <div class=" featured__item">
+                        <div class="featured__item__pic set-bg">
+                            <a th:href="@{/chitiet/{bookId}(bookId=${item.id})}"> <img
+                                    th:src="@{/assets/img/__${item.image}__}" alt=""> </a>
+                            <ul class="featured__item__pic__hover">
+
+                                <li><a th:href="@{/themYeuThich/{bookId}(bookId=${item.id})}"><i
+                                            class="fa fa-heart"></i></a>
+                                </li>
+                                <li><a href="" data-bs-toggle="modal" th:data-bs-target="'#modal_'+${item.id}"><i
+                                            class="fa-solid fa-share"></i></a></li>
+                                <li><a><i class="fa fa-shopping-cart"></i></a>
+                                </li>
+                            </ul>
+
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a th:href="@{/chitiet/{bookId}(bookId=${item.id})}" th:text="${item.title}"></a></h6>
+                            <h4 th:text="${item.price}  +' VNĐ'"></h4>
+
+                        </div>
+                        <div class="ribben">
+                            <p>NEW</p>
+                        </div>
+                    </div>
+                    <div class=" modal fade" th:id="'modal_'+${item.id}" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <form method="post">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Chia sẻ sách: <strong
+                                                th:text="${item.title}"></strong> </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label class="label" for="email">Email Address</label>
+                                            <input type="email" class="form-control" name="emailShare" id="email"
+                                                placeholder="Email" required>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button th:attr="formaction=@{/share/{bookId}(bookId=${item.id})}" type="submit"
+                                            class="btn btn-primary">Save
+                                            changes</button>
+
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </section> -->
+    <!-- Featured Section End -->
+    <!-- Categories Section Begin -->
+    <!-- Categories Section End -->
+
+</section>
